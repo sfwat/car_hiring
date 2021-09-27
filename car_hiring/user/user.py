@@ -1,23 +1,41 @@
-from abc import ABC, abstractmethod
+from flask import app, jsonify, g
 
 
-class User(ABC):
-    @abstractmethod
+class Customer:
+    def __init__(self, name=None, email=None, phone=None, id=None):
+        self.username = name
+        self.email = email
+        self.phone = phone
+        self.id = id
+
     def create(self):
-        pass
+        query = """insert into `customers` (username, email, phone) values (%s, %s, %s) """
+        db = g.db
+        cur = db.cursor()
+        cur.execute(query, (self.username, self.email, self.phone))
+        db.commit()
+        cur.close()
+        return jsonify({"message": "successfully inserted"}), 201
 
-    @abstractmethod
     def get(self):
-        pass
+        query = """select * from `customers` where  customerId = %s"""
+        db = g.db
+        cur = db.cursor()
+        cur.execute(query, self.id)
+        customer = cur.fetchone()
+        cur.close()
+        if not customer:
+            return jsonify({"message": f"customer with Id {self.id} does not exist"}), 404
+        return jsonify({"customer": customer}), 200
 
-    @abstractmethod
-    def update(self):
-        pass
-
-    @abstractmethod
     def delete(self):
-        pass
-
-
-class Customer(User):
-    pass
+        query = """delete  from `customers` where  customerId = %s"""
+        db = g.db
+        cur = db.cursor()
+        deleted = cur.execute(query, self.id)
+        if not deleted:
+            cur.close()
+            return jsonify({"message": f"customer with Id {self.id} does not exist"}), 404
+        db.commit()
+        cur.close()
+        return jsonify({"message": "successfully deleted"}), 200
