@@ -13,9 +13,9 @@ Create DB
 
 How to run
 =====================================
-1.Create and activate Virual enviroment **$virtualenv venv**    **source/venv/bin/activate**
-3. Move to car_hiring dir and install packages from requirments file $ pip install -r requirments.txt
-4. Run the run.py file
+1. Create and activate Virual enviroment **$virtualenv venv**    **source/venv/bin/activate**
+2. Move to car_hiring dir and install packages from requirments file $ pip install -r requirments.txt
+3. Run the run.py file
 
 
 Apis
