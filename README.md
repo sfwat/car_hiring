@@ -8,7 +8,7 @@
 
 Create DB
 =====================================
-1. clone git repo https://github.com/sfwat/car_hiring.git
+1. clone git repo https://github.com/sfwat/car_hiring.git on a UNIX based system
 2. In mysql shell run source car_hiring/car_hiring.sql
 
 How to run
